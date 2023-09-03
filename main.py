@@ -3,7 +3,6 @@ import numpy as np
 import requests
 import os
 
-# scroll down to the bottom to implement your solution
 
 if __name__ == '__main__':
 
@@ -32,7 +31,6 @@ if __name__ == '__main__':
         open('../Data/hr_data.xml', 'wb').write(r.content)
         print('Loaded.')
 
-        # All data in now loaded to the Data folder.
 
 office_b_df = pd.read_xml('C:\\Users\\mikol\\Downloads\\B_office_data.xml')
 office_a_df = pd.read_xml('C:\\Users\\mikol\\Downloads\\A_office_data.xml')
@@ -59,12 +57,12 @@ merged_df = merged_df[merged_df['_merge'] == 'both']
 
 merged_df = merged_df.drop(['employee_office_id', '_merge'], axis=1)
 merged_df.sort_index(inplace=True)
-"""2nd stage
+
 print(merged_df.index.tolist())
 print(merged_df.columns.tolist())
-"""
 
-"""3rd stage
+
+
 ans_1_df = merged_df.sort_values('average_monthly_hours', ascending=False)['Department']
 ans_1 = ans_1_df[0:10].values.tolist()
 print(ans_1)
@@ -74,8 +72,8 @@ print(f"{ans_2}")
 df_ans_3 = merged_df.loc[['A4', 'B7064', 'A3033'], ['last_evaluation', 'satisfaction_level']]
 ans_3 = df_ans_3.values.tolist()
 print(ans_3)
-"""
-"""4th stage
+
+
 def count_bigger_5(series):
     c = 0
     for e in series:
@@ -93,9 +91,8 @@ grouped_df = merged_df.groupby('left').agg({
 })
 df_dict = grouped_df.round(2).to_dict()
 print(df_dict)
-"""
-
-"""5th stage
+                         
+ 
 median_hours_df = merged_df.pivot_table(index='Department', columns=['left', 'salary'], values='average_monthly_hours', aggfunc='median')
 filtered_pivot_df = median_hours_df.loc[median_hours_df[(0, 'high')] < median_hours_df[(0, 'medium')]]
 filtered_pivot_df_2 = median_hours_df.loc[median_hours_df[(1, 'high')] > median_hours_df[(1, 'low')]]
@@ -104,4 +101,4 @@ print(pivot_df.round(2).to_dict())
 promotion_df = merged_df.pivot_table(index='time_spend_company', columns=['promotion_last_5years'], values=['satisfaction_level', 'last_evaluation'], aggfunc=[min, max, 'mean'])
 filtered_pivot_df_3 = promotion_df.loc[promotion_df[('mean', 'last_evaluation')][0] > promotion_df[('mean', 'last_evaluation')][1]]
 print(filtered_pivot_df_3.round(2).to_dict())
-"""
+
